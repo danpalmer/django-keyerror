@@ -1,5 +1,5 @@
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 
 from django.core.management.base import BaseCommand, CommandError
 
@@ -21,7 +21,7 @@ class Command(BaseCommand):
         except ValueError:
             raise CommandError("Invalid arguments: %s" % self.args)
 
-        req = urllib2.Request(post_url, urllib.urlencode({
+        req = urllib.request.Request(post_url, urllib.parse.urlencode({
             'url': url,
             'title': title,
         }), {
@@ -29,6 +29,6 @@ class Command(BaseCommand):
         })
 
         try:
-            urllib2.urlopen(req, timeout=5)
-        except urllib2.HTTPError, exc:
+            urllib.request.urlopen(req, timeout=5)
+        except urllib.error.HTTPError as exc:
             raise CommandError("Error when notifying KeyError: %s" % exc)

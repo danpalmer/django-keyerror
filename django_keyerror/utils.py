@@ -4,7 +4,7 @@ import binascii
 
 from . import app_settings
 
-TYPE_PING, TYPE_RESPONSE = range(2)
+TYPE_PING, TYPE_RESPONSE = list(range(2))
 
 def ping():
     _send(TYPE_PING)

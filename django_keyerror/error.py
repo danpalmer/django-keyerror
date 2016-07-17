@@ -1,9 +1,9 @@
 import sys
 import json
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import socket
 import logging
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import traceback
 
 from django.conf import settings
@@ -35,7 +35,7 @@ class Error(dict):
 
         logger.debug("Posting error to %s", url)
 
-        req = urllib2.Request(url, urllib.urlencode(self), {
+        req = urllib.request.Request(url, urllib.parse.urlencode(self), {
             'X-API-Key': app_settings.SECRET_KEY,
         })
 
@@ -45,8 +45,8 @@ class Error(dict):
             if sys.version_info >= (2, 6):
                 kwargs['timeout'] = app_settings.TIMEOUT
 
-            urllib2.urlopen(req, **kwargs)
-        except urllib2.HTTPError, e:
+            urllib.request.urlopen(req, **kwargs)
+        except urllib.error.HTTPError as e:
             try:
                 # We try and print a descriptive message on the first line of
                 # the response
